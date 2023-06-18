@@ -6,10 +6,8 @@ import { useEffect } from "react";
 import {
     getUserProfileAPI,
 } from "../../redux/Reducers/userReducer";
-import ModalProfile from "../../HOC/ModalProfile";
+import ModalProfile from "../../components/Modal/ModalProfile";
 import RoomItem from "./RoomProfile/RoomItem";
-
-import _ from "lodash";
 import UpdateAvatar from "./UpdateAvatar";
 import { MdOutlinePlaylistAddCheck } from "react-icons/md";
 
@@ -19,7 +17,7 @@ export default function Profile() {
 
     useEffect(() => {
         dispatch(getUserProfileAPI());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>

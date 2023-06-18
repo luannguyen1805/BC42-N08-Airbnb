@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, getStoreJSON, USER_LOGIN } from "../../utils/setting";
 import { useAppDispatch, useAppSelector } from "../../Hooks/HooksRedux";
-import { getUserProfileAPI } from "../../redux/Reducers/userReducer";
+import { getUserProfileAPI, singout } from "../../redux/Reducers/userReducer";
 
 export default function HeaderMenu() {
   const [userLog, setUserLog] = useState(null);
@@ -15,12 +15,12 @@ export default function HeaderMenu() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
+   
       if (userLogin && Object.keys(userLogin).length !== 0) {
-        await setUserLog(userLogin);
+         setUserLog(userLogin);
       }
-      await dispatch(getUserProfileAPI());
-    })();
+        dispatch(getUserProfileAPI());
+
   }, [dispatch,userLogin]);
 
   const handleMenuClick = (route) => {
@@ -28,6 +28,8 @@ export default function HeaderMenu() {
   };
 
   const handleLogout = () => {
+    dispatch(singout());
+    localStorage.removeItem(USER_LOGIN);
     localStorage.removeItem(ACCESS_TOKEN);
     navigate("/login");
   };
@@ -102,7 +104,7 @@ export default function HeaderMenu() {
             src={
               userProfile?.avatar
                 ? userProfile.avatar
-                : "./images/avata1.jpg"
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-0CXiCSzYB7Qls6acs-5VZHEewRNH3DUyA&usqp=CAU"
             }
            alt=""
           />

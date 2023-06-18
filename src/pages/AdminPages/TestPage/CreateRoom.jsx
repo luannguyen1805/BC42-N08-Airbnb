@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewRoom } from "../../../redux/Reducers/roomReducer";
 import { useNavigate } from "react-router-dom";
+import "./Btn.scss"
 
 export default function CreateRoom() {
     const navigate = useNavigate();
@@ -176,15 +177,13 @@ export default function CreateRoom() {
                 <Input type="file" name="hinhAnh" onChange={hanldeChangeImage} />
                 <Image
                     src={image}
-                    style={{ padding: "50px" }}
+                    style={{ padding: "50px" , border: "1px solid" }}
                     alt="pic"
                     onChange={hanldeChangeImage}
                 />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="create-user-submit-button">
+                <Button type="primary" htmlType="submit">Submit</Button>
             </Form.Item>
         </Form>
     );

@@ -4,6 +4,7 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { createLocationApi } from "../../../redux/Reducers/locationReducer";
 import { useNavigate } from "react-router-dom";
+import "./Btn.scss"
 
 export default function CreateLocation() {
   const navigate = useNavigate();
@@ -67,13 +68,11 @@ export default function CreateLocation() {
 
       <Form.Item label="Hình ảnh">
         <Input type="file" onChange={hanldeChangeImage} />
-        <Image src={image} style={{ padding: "50px" }} alt="pic" />
+        <Image src={image} style={{ padding: "50px", border: "1px solid" }} alt="pic" className="mt-1"/>
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="create-user-submit-button">
+        <Button type="primary" htmlType="submit">Submit</Button>
       </Form.Item>
     </Form>
   );

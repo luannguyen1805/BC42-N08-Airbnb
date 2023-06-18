@@ -3,158 +3,164 @@ import { http } from "../../utils/setting";
 
 const initialState = {
   arrUser: [],
-  userUpdate: [],
-  userPost: [],
+  userUpdate: null,
+  userPost: null,
   userAvatar: null,
 };
 
-export const getUserApi = createAsyncThunk(
-  "userAdminReducer/getUserApi",
-  async (_, { dispatch }) => {
+export const getAllUser = createAsyncThunk(
+  "userAdmin/getAllUser",
+  async () => {
     try {
-      const result = await http.get("/users");
-      const arrUser = result.data.content;
-      dispatch(getAllUserAction(arrUser));
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
-
-export const putUserApi = createAsyncThunk(
-  "userAdminReducer/putUserApi",
-  async ({ id, data }, { dispatch }) => {
-    try {
-      const result = await http.put(`/users/${id}`, data);
-      dispatch(setUserUpdate(result.data.content));
+      const response = await http.get("/users");
+      return response.data.content;
     } catch (error) {
-      console.log({ error });
+      console.log(error);
+      throw error;
     }
   }
 );
 
-export const createUserApi = createAsyncThunk(
-  "userAdminReducer/createUserApi",
-  async (data, { dispatch }) => {
+export const updateUser = createAsyncThunk(
+  "userAdmin/updateUser",
+  async ({ id, data }) => {
     try {
-      const result = await http.post("/users", data);
-      dispatch(userCreateAdmin(result.data.content));
-    } catch (err) {
-      console.log(err);
+      const response = await http.put(`/users/${id}`, data);
+      console.log(response.data.content);
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 );
 
-export const deleteUserApi = createAsyncThunk(
-  "userAdminReducer/deleteUserApi",
+export const createUser = createAsyncThunk(
+  "userAdmin/createUser",
+  async (data) => {
+    try {
+      const response = await http.post("/users", data);
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "userAdmin/deleteUser",
   async (id) => {
     try {
       await http.delete(`/users?id=${id}`);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 );
 
-export const getUserAPiID = createAsyncThunk(
-  "userAdminReducer/getUserAPiID",
-  async (id, { dispatch }) => {
+export const getUserById = createAsyncThunk(
+  "userAdmin/getUserById",
+  async (id) => {
     try {
-      const result = await http.get(`/users/${id}`);
-      dispatch(setUserUpdate(result.data.content));
-    } catch (err) {
-      console.log({ err });
+      const response = await http.get(`/users/${id}`);
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 );
 
 export const getPaginationUser = createAsyncThunk(
-  "userAdminReducer/getPaginationUser",
-  async (page, { dispatch }) => {
+  "userAdmin/getPaginationUser",
+  async (page) => {
     try {
-      const result = await http.get(
+      const response = await http.get(
         `/users/phan-trang-tim-kiem?pageIndex=${page}&pageSize=10`
       );
-      const arrUser = result.data.content;
-      dispatch(getAllUserAction(arrUser));
-    } catch (err) {
-      console.log({ err });
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 );
 
 export const updateAvatarUser = createAsyncThunk(
-  "userAdminReducer/updateAvatarUser",
-  async (data, { dispatch }) => {
+  "userAdmin/updateAvatarUser",
+  async (data) => {
     try {
-      const result = await http.post("/users/upload-avatar", data);
-      dispatch(userChangeAvatar(result.data.content));
-    } catch (err) {
-      console.log(err);
+      const response = await http.post("/users/upload-avatar", data);
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 );
 
 export const searchUser = createAsyncThunk(
-  "userAdminReducer/searchUser",
-  async (name, { dispatch }) => {
+  "userAdmin/searchUser",
+  async (name) => {
     try {
-      const result = await http.get(`/users/search/${name}`);
-      const arrUser = result.data.content;
-      dispatch(getAllUserAction(arrUser));
-    } catch (err) {
-      console.log({ err });
+      const response = await http.get(`/users/search/${name}`);
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 );
 
-const userAdminReducer = createSlice({
-  name: "userAdminReducer",
+const userAdminSlice = createSlice({
+  name: "userAdmin",
   initialState,
   reducers: {
-    getAllUserAction: (state, action) => {
-      state.arrUser = action.payload;
-    },
     setUserUpdate: (state, action) => {
       state.userUpdate = action.payload;
     },
-    userCreateAdmin: (state, action) => {
+    setUserPost: (state, action) => {
       state.userPost = action.payload;
     },
-    userChangeAvatar: (state, action) => {
+    setUserAvatar: (state, action) => {
       state.userAvatar = action.payload;
     },
   },
-  extraReducers: {
-    [getUserApi.fulfilled]: (state, action) => {
-      state.arrUser = action.payload;
-    },
-    [putUserApi.fulfilled]: (state, action) => {
-      state.userUpdate = action.payload;
-    },
-    [createUserApi.fulfilled]: (state, action) => {
-      state.userPost = action.payload;
-    },
-    [getUserAPiID.fulfilled]: (state, action) => {
-      state.userUpdate = action.payload;
-    },
-    [getPaginationUser.fulfilled]: (state, action) => {
-      state.arrUser = action.payload;
-    },
-    [updateAvatarUser.fulfilled]: (state, action) => {
-      state.userAvatar = action.payload;
-    },
-    [searchUser.fulfilled]: (state, action) => {
-      state.arrUser = action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllUser.fulfilled, (state, action) => {
+        state.arrUser = action.payload;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.userUpdate = action.payload;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.userPost = action.payload;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        // Handle delete success if needed
+      })
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.userUpdate = action.payload;
+      })
+      .addCase(getPaginationUser.fulfilled, (state, action) => {
+        state.arrUser = action.payload;
+      })
+      .addCase(updateAvatarUser.fulfilled, (state, action) => {
+        state.userAvatar = action.payload;
+      })
+      .addCase(searchUser.fulfilled, (state, action) => {
+        state.arrUser = action.payload;
+      });
   },
 });
 
 export const {
-  getAllUserAction,
   setUserUpdate,
-  userCreateAdmin,
-  userChangeAvatar,
-} = userAdminReducer.actions;
+  setUserPost,
+  setUserAvatar
+} = userAdminSlice.actions;
 
-export default userAdminReducer.reducer;
+export default userAdminSlice.reducer;

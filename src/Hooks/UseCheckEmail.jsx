@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserApi } from '../redux/Reducers/userAdminReducer';
+import { getAllUser } from '../redux/Reducers/userAdminReducer';
 
 export default function UseCheckEmail() {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export default function UseCheckEmail() {
   const [isExitEmail, setIsValid] = useState(true);
 
   useEffect(() => {
-    dispatch(getUserApi());
+    dispatch(getAllUser());
   }, []);
 
   const handleCheckEmail = (e) => {

@@ -1,98 +1,135 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { http } from '../../utils/setting';
+import { http } from "../../utils/setting";
+
+const initialState = {
+  roombookingList: [],
+  roombookingPut: [],
+  roombookingPost: [],
+  status: "idle",
+  error: null,
+};
 
 export const getAllRoomBooking = createAsyncThunk(
-  "bookingReducer/getAllRoomBooking",
+  "booking/getAllRoomBooking",
   async () => {
     try {
       const response = await http.get("/dat-phong");
       return response.data.content;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw Error(error.message);
     }
   }
 );
 
 export const putRoomBookingApi = createAsyncThunk(
-  "bookingReducer/putRoomBookingApi",
-  async (payload) => {
-    const { id, data } = payload;
+  "booking/putRoomBookingApi",
+  async ({ id, data }) => {
     try {
       const response = await http.put(`/dat-phong/${id}`, data);
       return response.data.content;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw Error(error.message);
     }
   }
 );
 
 export const deleteRoomBookingApi = createAsyncThunk(
-  "bookingReducer/deleteRoomBookingApi",
+  "booking/deleteRoomBookingApi",
   async (id) => {
     try {
       await http.delete(`/dat-phong/${id}`);
       return id;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw Error(error.message);
     }
   }
 );
 
 export const getRoomBookingApiID = createAsyncThunk(
-  "bookingReducer/getRoomBookingApiID",
+  "booking/getRoomBookingApiID",
   async (id) => {
     try {
       const response = await http.get(`/dat-phong/${id}`);
       return response.data.content;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw Error(error.message);
     }
   }
 );
 
 export const createRoomBookingApi = createAsyncThunk(
-  "bookingReducer/createRoomBookingApi",
+  "booking/createRoomBookingApi",
   async (data) => {
     try {
       const response = await http.post("/dat-phong", data);
       return response.data.content;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw Error(error.message);
     }
   }
 );
 
 const bookingSlice = createSlice({
-  name: "bookingReducer",
-  initialState: {
-    roombookingList: [],
-    roombookingPut: [],
-    roombookingPost: [],
-  },
+  name: "booking",
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllRoomBooking.fulfilled, (state, action) => {
-      state.roombookingList = action.payload;
-    });
-    builder.addCase(putRoomBookingApi.fulfilled, (state, action) => {
-      state.roombookingPut = action.payload;
-    });
-    builder.addCase(getRoomBookingApiID.fulfilled, (state, action) => {
-      state.roombookingPut = action.payload;
-    });
-    builder.addCase(createRoomBookingApi.fulfilled, (state, action) => {
-      state.roombookingPost = action.payload;
-    });
-    builder.addCase(deleteRoomBookingApi.fulfilled, (state, action) => {
-      state.roombookingList = state.roombookingList.filter(
-        (booking) => booking.id !== action.payload
-      );
-    });
+    builder
+      .addCase(getAllRoomBooking.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllRoomBooking.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.roombookingList = action.payload;
+      })
+      .addCase(getAllRoomBooking.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(putRoomBookingApi.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(putRoomBookingApi.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.roombookingPut = action.payload;
+      })
+      .addCase(putRoomBookingApi.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(deleteRoomBookingApi.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteRoomBookingApi.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        // Xử lý xóa đặt phòng khỏi state.roombookingList nếu cần thiết
+      })
+      .addCase(deleteRoomBookingApi.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getRoomBookingApiID.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getRoomBookingApiID.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.roombookingPut = action.payload;
+      })
+      .addCase(getRoomBookingApiID.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(createRoomBookingApi.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createRoomBookingApi.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.roombookingPost = action.payload;
+      })
+      .addCase(createRoomBookingApi.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 

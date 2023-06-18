@@ -49,14 +49,14 @@ export default function DetailBooking({ id }) {
         }
     };
 
-    const dateFormat = "MM/DD/yyyy";
+    const dateFormat = "MM/DD/YYYY";
     const onChange = (date, dateString) => {
         if (date !== null) {
             date[0].format(dateFormat);
             date[1].format(dateFormat);
         }
         setDate(dateString);
-        const currentDate = moment(new Date()).format("MM/DD/YYYY");
+        const currentDate = moment(new Date()).format(dateFormat);
         if (getDateDiff(dateString[0], currentDate) <= 0) {
             toast.error("Chọn lại ngày đến và đi", toastOptionsErr);
         } else {

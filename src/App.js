@@ -26,7 +26,6 @@ const UpdateBooking = lazy(() => import("./pages/AdminPages/TestPage/UpdateBooki
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const RoomItem = lazy(() => import("./pages/Profile/RoomProfile/RoomItem"));
 const DetailLocation = lazy(() => import("./pages/DetailLocation/DetailLocation"));
-const Chat = lazy(() => import("./pages/ChatBox/Chat"));
 const DashBoardInfor = lazy(() => import("./pages/AdminPages/Dashboard/DashBoardInfor"));
 
 export const history = createBrowserHistory({ window });
@@ -67,19 +66,18 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/test1" element={<RoomItem />} />
             <Route path="/admin/dashboard" element={<DashBoard />}>
-              <Route path="chat" element={<Chat />} />
               <Route path="DashBoardInfor" element={<DashBoardInfor />} />
               <Route path="userAdmin" element={<UserManagement />} />
               <Route path="roomAdmin" element={<RoomManagement />} />
               <Route path="locationAdmin" element={<LocationManagement />} />
               <Route path="bookingAdmin" element={<BookingManagement />} />
-              <Route path="userAdmin/createuser" element={<CreateUser />} />
-              <Route path="userAdmin/updateuser/:id" element={<UpdateUser />} />
-              <Route path="roomAdmin/createroom" element={<CreateRoom />} />
-              <Route path="roomAdmin/updateroom/:id" element={<UpdateRoom />} />
-              <Route path="locationAdmin/createlocation" element={<CreateLocation />} />
-              <Route path="locationAdmin/updatelocation/:id" element={<UpdateLocation />} />
-              <Route path="bookingAdmin/updatebooking/:id" element={<UpdateBooking />} />
+              <Route path="userAdmin/createUser" element={<CreateUser />} />
+              <Route path="userAdmin/updateUser/:id" element={<UpdateUser />} />
+              <Route path="roomAdmin/createRoom" element={<CreateRoom />} />
+              <Route path="roomAdmin/updateRoom/:id" element={<UpdateRoom />} />
+              <Route path="locationAdmin/createLocation" element={<CreateLocation />} />
+              <Route path="locationAdmin/updateLocation/:id" element={<UpdateLocation />} />
+              <Route path="bookingAdmin/updateBooking/:id" element={<UpdateBooking />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

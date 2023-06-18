@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, Typography } from "antd";
 import { FaHouseUser, FaTicketAlt, FaUserEdit } from "react-icons/fa";
 import { GrMapLocation } from "react-icons/gr";
-import { getUserApi } from "../../../redux/Reducers/userAdminReducer";
+import { getAllUser } from "../../../redux/Reducers/userAdminReducer";
 import { getAllRoom } from "../../../redux/Reducers/roomReducer";
 import { getLocationApi } from "../../../redux/Reducers/locationReducer";
 import { getAllRoomBooking } from "../../../redux/Reducers/bookingRoomReducer";
@@ -16,7 +16,7 @@ const DashboardInfo = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getUserApi());
+        dispatch(getAllUser());
         dispatch(getAllRoom());
         dispatch(getLocationApi());
         dispatch(getAllRoomBooking());

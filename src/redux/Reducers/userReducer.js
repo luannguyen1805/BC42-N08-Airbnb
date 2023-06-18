@@ -8,6 +8,7 @@ const initialState = {
   userBooking: [],
 };
 
+
 export const postSignupUser = createAsyncThunk(
   "userReducer/postSignupUser",
   async (data) => {
@@ -113,10 +114,16 @@ export const updateAvatarUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "userReducer",
   initialState,
-  reducers: {},
+  reducers: {
+    singout: (state, action) => {
+      return { ...state, userLogin: null }
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(postSignupUser.fulfilled, (state, action) => {})
+      .addCase(postSignupUser.fulfilled, (state, action) => { 
+        
+      })
       .addCase(postSignIn.fulfilled, (state, action) => {
         state.userLogin = action.payload;
       })
@@ -134,5 +141,7 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const { singout } = userSlice.actions;
 
 export default userSlice.reducer;

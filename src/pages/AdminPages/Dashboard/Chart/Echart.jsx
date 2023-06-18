@@ -12,7 +12,7 @@ const Echart = ({ }) => {
     }, []);
 
     const { roombookingList } = useSelector((state) => state.bookingReducer);
-    const roombookingListCount = roombookingList.length;
+    const roombookingListCount = roombookingList?.length || 0;
 
     const { Title, Paragraph } = Typography;
 

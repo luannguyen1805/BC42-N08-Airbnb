@@ -1,4 +1,5 @@
 import React from 'react'
+import BackToTop from '../../components/BackToTop/BackToTop'
 import CarouselComponent from '../../components/Carousel/CarouselComponent'
 import CarouselSearchByType from '../../components/Carousel/CarouselSearchByType'
 
@@ -11,6 +12,7 @@ function Home() {
         <CarouselSearchByType/>
         <CarouselComponent/>
         <HeaderLocation/>
+        <BackToTop/>
     </>
   )
 }

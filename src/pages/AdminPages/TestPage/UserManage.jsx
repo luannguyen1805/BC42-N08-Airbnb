@@ -2,24 +2,17 @@ import { Table, Input, Space, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserApi, getPaginationUser } from "../../../redux/Reducers/userAdminReducer";
-import { deleteUserApi } from "../../../redux/Reducers/userAdminReducer";
+import { getAllUser, getPaginationUser } from "../../../redux/Reducers/userAdminReducer";
+import { deleteUser } from "../../../redux/Reducers/userAdminReducer";
 
 export default function UserManagement() {
     const dispatch = useDispatch();
-
     const [searchState, setSearchState] = useState([]);
-
     const { arrUser } = useSelector((state) => state.userAdminReducer);
-
     useEffect(() => {
-        dispatch(getUserApi());
+        dispatch(getAllUser());
     }, []);
-
-    console.log(arrUser);
-
     const navigate = useNavigate();
-
     const { Search } = Input;
 
     const columns = [
@@ -89,8 +82,8 @@ export default function UserManagement() {
                         </span>
                         <span
                             onClick={async () => {
-                                await dispatch(deleteUserApi(id));
-                                dispatch(getUserApi())
+                                await dispatch(deleteUser(id));
+                                dispatch(getAllUser())
                             }}
                             className="inline-block py-1 px-2 bg-red-500 rounded-md cursor-pointer transition-all duration-300 hover:bg-red-600"
                         >
@@ -102,23 +95,19 @@ export default function UserManagement() {
         },
     ];
 
-    const data = arrUser.map((ele, index) => {
-        return {
-            key: index + 1,
-            id: ele.id,
-            name: ele.name,
-            email: ele.email,
-            password: ele.password,
-            phone: ele.phone,
-            birthday: ele.birthday,
-            avatar: ele.avatar,
-            gender: ele.gender,
-            role: ele.role,
-            tuongTac: ele.id,
-        };
-    });
-
-    console.log(data);
+    const data = arrUser ? arrUser.map((ele, index) => ({
+        key: index + 1,
+        id: ele.id,
+        name: ele.name,
+        email: ele.email,
+        password: ele.password,
+        phone: ele.phone,
+        birthday: ele.birthday,
+        avatar: ele.avatar,
+        gender: ele.gender,
+        role: ele.role,
+        tuongTac: ele.id,
+      })) : [];
 
     const onSearch = (value) => {
         console.log(value);

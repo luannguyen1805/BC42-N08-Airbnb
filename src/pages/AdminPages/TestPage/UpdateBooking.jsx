@@ -1,49 +1,55 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, DatePicker, notification, InputNumber, Button } from "antd";
-import moment from "moment";
+import {
+    Button,
+    Form,
+    Input,
+    DatePicker,
+    notification,
+    InputNumber
+} from "antd"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import moment from "moment"
 import { getRoomBookingApiID, putRoomBookingApi } from "../../../redux/Reducers/bookingRoomReducer";
-import { AppDispatch, RootState } from "../../../redux/configStore";
-import { useNavigate, useParams } from "react-router-dom";
+
+import "./Btn.scss"
 
 export default function UpdateBooking() {
-    const params = useParams();
-    const [form] = Form.useForm();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const params = useParams()
+    const [form] = Form.useForm()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const { roombookingPut } = useSelector(
-        (state) => state.bookingReducer
-    );
-    console.log(roombookingPut);
+    const { roombookingPut } = useSelector(state => state.bookingReducer)
+    console.log(roombookingPut)
 
     useEffect(() => {
-        dispatch(getRoomBookingApiID(params.id));
-    }, []);
+        dispatch(getRoomBookingApiID(params.id))
+    }, [])
     useEffect(() => {
         if (roombookingPut) {
             form.setFieldsValue({
                 ...roombookingPut,
                 ngayDen: moment(roombookingPut.ngayDen),
-                ngayDi: moment(roombookingPut.ngayDi),
-            });
+                ngayDi: moment(roombookingPut.ngayDi)
+            })
         }
-    }, [roombookingPut]);
+    }, [roombookingPut])
 
-    const onFinish = async (values) => {
+    const onFinish = values => {
         values.id = 0;
         if (values) {
-            await dispatch(putRoomBookingApi(params.id, values));
+            dispatch(putRoomBookingApi(params.id, values))
             notification.success({
-                message: "Cập nhật đặt phòng thành công",
-            });
+                message: "Cập nhật đặt phòng thành công"
+            })
         }
-        navigate("/admin/dashboard/bookingAdmin");
-    };
+        navigate("/admin/dashboard/bookingAdmin")
+    }
 
-    const onFinishFailed = (errorInfo) => {
-        console.log("Failed:", errorInfo);
-    };
+    const onFinishFailed = errorInfo => {
+        console.log("Failed:", errorInfo)
+    }
 
     return (
         <Form
@@ -63,6 +69,7 @@ export default function UpdateBooking() {
             >
                 <Input />
             </Form.Item>
+
             <Form.Item
                 label="Ngày Đến"
                 name="ngayDen"
@@ -92,11 +99,14 @@ export default function UpdateBooking() {
                 <Input />
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item
+                wrapperCol={{ offset: 8, span: 16 }}
+                className="create-user-submit-button"
+            >
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    Update
                 </Button>
             </Form.Item>
         </Form>
-    );
+    )
 }

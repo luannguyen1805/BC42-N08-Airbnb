@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {
-    Button,
-    Checkbox,
-    Form,
-    Input,
-    DatePicker,
-    Select,
-    Image,
-    notification,
-} from "antd";
-import moment from "moment";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createUserApi } from "../../../redux/Reducers/userAdminReducer";
 import { useNavigate } from "react-router-dom";
+import { Form, Input, Button, DatePicker, Select, notification } from "antd";
+import moment from "moment";
+import { createUser } from "../../../redux/Reducers/userAdminReducer";
+import "./Btn.scss"
+
+const { Option } = Select;
 
 export default function CreateUser() {
     const navigate = useNavigate();
@@ -20,7 +14,8 @@ export default function CreateUser() {
     const [image, setImage] = useState("");
     const [sendfile, setSendfile] = useState();
     const [form] = Form.useForm();
-    const { Option } = Select;
+
+    const formData = new FormData();
 
     const onChange = (date, dateString) => {
         console.log(moment(date).format("DD/MM/YYYY"));
@@ -29,7 +24,7 @@ export default function CreateUser() {
     const onFinish = async (values) => {
         values.birthday = values.birthday.format("DD/MM/YYYY");
         if (values) {
-            await dispatch(createUserApi(values));
+            await dispatch(createUser(values));
             notification.success({
                 message: "Thêm người dùng thành công",
             });
@@ -70,20 +65,8 @@ export default function CreateUser() {
         },
     };
 
-    const tailFormItemLayout = {
-        wrapperCol: {
-            xs: {
-                span: 24,
-                offset: 0,
-            },
-            sm: {
-                span: 16,
-                offset: 8,
-            },
-        },
-    };
 
-    let allowedDateFormats = [
+    const allowedDateFormats = [
         "DD/MM/YYYY",
         "D/M/YYYY",
         "DD.MM.YYYY",
@@ -129,6 +112,7 @@ export default function CreateUser() {
             >
                 <Input.Password />
             </Form.Item>
+
             <Form.Item
                 label="Email"
                 name="email"
@@ -136,6 +120,7 @@ export default function CreateUser() {
             >
                 <Input />
             </Form.Item>
+
             <Form.Item
                 label="Số điện thoại"
                 name="phone"
@@ -143,6 +128,7 @@ export default function CreateUser() {
             >
                 <Input />
             </Form.Item>
+
             <Form.Item
                 label="Ngày sinh"
                 name="birthday"
@@ -150,17 +136,20 @@ export default function CreateUser() {
             >
                 <DatePicker onChange={onChange} format={allowedDateFormats} />
             </Form.Item>
+
             <Form.Item
                 label="Giới tính"
                 name="gender"
                 rules={[{ required: true, message: "Chưa chọn giới tính!" }]}
-                hasFeedback validateStatus="success"
+                hasFeedback
+                validateStatus="success"
             >
                 <Select style={{ width: 120 }} onChange={handleChangeOne}>
                     <Option value="true">Nam</Option>
                     <Option value="false">Nữ</Option>
                 </Select>
             </Form.Item>
+
             <Form.Item
                 label="Loại người dùng"
                 name="role"
@@ -171,13 +160,13 @@ export default function CreateUser() {
                     <Option value="USER">User</Option>
                 </Select>
             </Form.Item>
+
             <Form.Item label="Hình ảnh">
                 <Input type="file" onChange={hanldeChangeImage} />
             </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
+
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="create-user-submit-button">
+                <Button type="primary" htmlType="submit">Submit</Button>
             </Form.Item>
         </Form>
     );

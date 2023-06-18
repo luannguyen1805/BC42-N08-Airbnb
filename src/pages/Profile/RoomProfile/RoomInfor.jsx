@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import _ from "lodash";
-import { http } from "../../../utils/setting";
 import { BsFillForwardFill, BsFillGeoAltFill } from "react-icons/bs";
+import { getDetailRoom } from "../../../redux/Reducers/roomReducer";
+import { http } from "../../../utils/setting";
 
 export default function RoomInfor({ mainbooking }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formatDay = "DD/MM/YYYY";
+  
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -18,7 +20,7 @@ export default function RoomInfor({ mainbooking }) {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await http.get(
+        const { data: response } = await http.get(
           `https://airbnbnew.cybersoft.edu.vn/api/phong-thue/${mainbooking.maPhong}`
         );
         setData(response.content);
@@ -40,7 +42,7 @@ export default function RoomInfor({ mainbooking }) {
           className="h-full w-full rounded-xl"
           src={
             data?.hinhAnh ||
-            "https://kconceptvn.com/wp-content/uploads/2020/04/hotel-photography-chup-anh-khachsan-resort-kk-hotel-sapa-khach-san-kk-169-1.jpg"
+            "../../../assets/img/banner/banner-1.jpg"
           }
           alt=""
         />
@@ -59,13 +61,13 @@ export default function RoomInfor({ mainbooking }) {
             {mainbooking.soLuongKhach} khách - {data?.phongNgu} phòng ngủ -{" "}
             {data?.phongTam} phòng tắm
           </p>
-          <p className="flex justify-start w-9/12 mt-4 ml-10">
+          <div className="flex justify-start w-9/12 mt-4 ml-10">
             <p className="mr-4">{moment(mainbooking.ngayDen).format(formatDay)}</p>
             <span className="mr-4">
               <BsFillForwardFill />
             </span>
             <p>{moment(mainbooking.ngayDi).format(formatDay)}</p>
-          </p>
+          </div>
           <p className="flex text-sm font-extrabold justify-end w-10/12 mt-4">
             Giá tiền: {data?.giaTien}$ / ngày
           </p>
@@ -74,3 +76,4 @@ export default function RoomInfor({ mainbooking }) {
     </div>
   );
 }
+

@@ -2,7 +2,7 @@ import { Card, Form, Input, Modal, Image, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getUserAPiID } from "../../redux/Reducers/userAdminReducer";
+import { getUserById } from "../../redux/Reducers/userAdminReducer";
 import { updateAvatarUser } from "../../redux/Reducers/userReducer";
 
 export default function UpdateAvatar() {
@@ -13,7 +13,7 @@ export default function UpdateAvatar() {
 
     useEffect(() => {
         if (params.userId) {
-            dispatch(getUserAPiID(+params.userId));
+            dispatch(getUserById(+params.userId));
         }
     }, [params.userId]);
 

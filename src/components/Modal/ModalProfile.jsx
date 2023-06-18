@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UpdateProfile from "../pages/Profile/UpdateProfile";
+import UpdateProfile from "../../pages/Profile/UpdateProfile";
 
 const ModalProfile = () => {
   const [showModal, setShowModal] = useState(false);

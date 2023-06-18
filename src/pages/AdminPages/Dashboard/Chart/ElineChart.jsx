@@ -2,16 +2,16 @@ import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserApi } from "../../../../redux/Reducers/userAdminReducer";
+import { getAllUser } from "../../../../redux/Reducers/userAdminReducer";
 
 const LineChart = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUserApi());
+    dispatch(getAllUser());
   }, []);
 
   const { arrUser } = useSelector((state) => state.userAdminReducer);
-  const arrUserCount = arrUser.length;
+  const arrUserCount = arrUser?.length || 0;
 
   const options = {
     chart: {

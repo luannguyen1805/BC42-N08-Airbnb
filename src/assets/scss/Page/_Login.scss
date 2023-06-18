@@ -1,8 +1,10 @@
 .cont {
     width: 100%;
     height: 100vh;
+    position: relative;
     background-size:100% 100% ;
-            background-image: url('https://images.pexels.com/photos/346271/exposure-long-photography-rotterdam-346271.jpeg?cs=srgb&dl=pexels-skitterphoto-346271.jpg&fm=jpg&_gl=1*3hijv4*_ga*MTY0ODc5MDM3OS4xNjY2NDMwOTMz*_ga_8JE65Q40S6*MTY2Nzg5OTU0NS42LjEuMTY2Nzg5OTczMC4wLjAuMA..g');
+            background-image: url('../../img/banner/banner-6.jpg');
+            
     svg {
             display: inline-block;
             width: 2rem;
@@ -30,7 +32,7 @@
     
         .demo {
             position: absolute;
-            top: 71%;
+            top: 66%;
             left: 50%;
             margin-left: -15rem;
             margin-top: -26.5rem;
@@ -42,7 +44,7 @@
         .login {
             position: relative;
             height: 90%;
-            background: linear-gradient(to bottom, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+            background: linear-gradient(to bottom, rgba(109, 95, 153, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
             transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
             transform: scale(1);
             border-radius: 16px;

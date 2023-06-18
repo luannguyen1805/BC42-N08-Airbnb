@@ -1,0 +1,23 @@
+.create-user-submit-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  
+  .create-user-submit-button button {
+    background-color: #1890ff;
+    opacity: 0.8;
+    color: #fff;
+    border: none;
+    padding: 0 20px;
+    font-size: 18px;
+    margin: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-user-submit-button button:hover {
+    background-color: #40a9ff;
+    opacity: 1;
+  }

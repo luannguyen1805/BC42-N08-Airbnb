@@ -12,7 +12,8 @@ import {
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserAPiID, putUserApi } from "../../../redux/Reducers/userAdminReducer";
+import { getUserById, updateUser, setUserUpdate } from "../../../redux/Reducers/userAdminReducer";
+import "./Btn.scss"
 
 export default function UpdateUser() {
     const param = useParams();
@@ -29,28 +30,36 @@ export default function UpdateUser() {
     console.log(userUpdate);
 
     useEffect(() => {
-        dispatch(getUserAPiID(param.id));
-    }, []);
-
-    const onFinish = async (values) => {
-        // console.log(values);
-        values.birthday = values.birthday.format("DD/MM/YYYY");
-        // values.id = param.id;
-        try {
-            if (values) {
-                // Post APi
-                await dispatch(putUserApi(param.id, values));
-                notification.success({
-                    message: "Cập nhật người dùng thành công",
-                });
-                navigate("/admin/dashboard/userAdmin");
-            }
-        } catch (error) {
-            notification.error({
-                message: `${error}`,
-            });
+        dispatch(getUserById(param.id));
+      }, [dispatch, param.id]);
+    
+      useEffect(() => {
+        if (userUpdate) {
+          form.setFieldsValue({
+            ...userUpdate,
+            birthday: moment(userUpdate.birthday, "DD-MM-YYYY"),
+          });
         }
-    };
+      }, [form, userUpdate]);
+    
+      const onFinish = async (values) => {
+        values.birthday = values.birthday.format("DD/MM/YYYY");
+        try {
+          if (values) {
+            await dispatch(updateUser(param.id, values));
+            // Cập nhật giá trị userUpdate
+            dispatch(setUserUpdate(values));
+            notification.success({
+              message: "Cập nhật người dùng thành công",
+            });
+            navigate("/admin/dashboard/userAdmin");
+          }
+        } catch (error) {
+          notification.error({
+            message: `${error}`,
+          });
+        }
+      };
 
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
@@ -72,41 +81,8 @@ export default function UpdateUser() {
         };
     };
 
-    //
-
-    const formItemLayout = {
-        labelCol: {
-            xs: { span: 24 },
-            sm: { span: 8 },
-        },
-        wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 16 },
-        },
-    };
-    const tailFormItemLayout = {
-        wrapperCol: {
-            xs: {
-                span: 24,
-                offset: 0,
-            },
-            sm: {
-                span: 16,
-                offset: 8,
-            },
-        },
-    };
-
     console.log(userUpdate);
 
-    useEffect(() => {
-        if (userUpdate) {
-            form.setFieldsValue({
-                ...userUpdate,
-                birthday: moment(userUpdate.birthday, "DD-MM-YYYY"),
-            });
-        }
-    }, [userUpdate]);
 
     let allowedDateFormats = [
         "DD/MM/YYYY",
@@ -195,10 +171,8 @@ export default function UpdateUser() {
                     onChange={hanldeChangeImage}
                 />
             </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
-                    UpdateUser
-                </Button>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="create-user-submit-button">
+                <Button type="primary" htmlType="submit">Update</Button>
             </Form.Item>
         </Form>
     );

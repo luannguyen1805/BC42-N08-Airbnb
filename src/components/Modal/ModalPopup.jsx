@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
-import { useAppDispatch, useAppSelector } from "../Hooks/HooksRedux";
-import { modalPopUp } from "../redux/Reducers/openModalReducer";
+import { useAppDispatch, useAppSelector } from "../../Hooks/HooksRedux";
+import { modalPopUp } from "../../redux/Reducers/openModalReducer";
 
 const ModalPopup = () => {
   const { ComponentContent, ComponentTitle, openModalPopup } = useAppSelector(

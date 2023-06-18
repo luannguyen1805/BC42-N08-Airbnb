@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BackToTop from "../../components/BackToTop/BackToTop";
-import ModalPopup from "../../HOC/ModalPopup";
+import ModalPopup from "../../components/Modal/ModalPopup";
 import { ToastContainer } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../Hooks/HooksRedux";
 import { getCommentRoomById } from "../../redux/Reducers/commentReducer";

@@ -10,7 +10,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import dayjs from "dayjs";
 import classNames from "classnames";
 import { postSignupUser } from "../../redux/Reducers/userReducer";
-import { getUserApi } from "../../redux/Reducers/userAdminReducer";
+import { getAllUser } from "../../redux/Reducers/userAdminReducer";
 import UseCheckEmail from "../../Hooks/UseCheckEmail";
 
 const Register = () => {
@@ -20,7 +20,7 @@ const Register = () => {
   const [day, setDay] = useState("1/1/2022");
 
   useEffect(() => {
-    dispatch(getUserApi());
+    dispatch(getAllUser());
   }, []);
 
   const { isExitEmail, handleCheckEmail } = UseCheckEmail();
@@ -70,17 +70,29 @@ const Register = () => {
     <form
       id="form"
       onSubmit={onSubmit}
-      style={{
-        backgroundImage:
-          'linear-gradient(to bottom, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0.2)),url("https://img.thuthuatphanmem.vn/uploads/2018/10/03/anh-bai-bien-dep-hoang-so_111547687.jpeg")',
-        backgroundSize: "100% 100%",
-        backgroundRepeat: "no-repeat",
-      }}
       className="bg-grey-lighter min-h-screen flex flex-col"
     >
+      <div
+                className="h-20 px-5 py-4 flex justify-center cursor-pointer "
+                style={{ boxShadow: " 0px 4px 12px rgba(0, 0, 0, 0.1)" }}
+                onClick={() => {
+                    navigate("/");
+                }}
+            >
+                <div className="h-12 w-12 rounded-xl overflow-hidden">
+                    <img
+                        className="h-full w-full"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-0CXiCSzYB7Qls6acs-5VZHEewRNH3DUyA&usqp=CAU"
+                        alt=""
+                    />
+                </div>
+                <span className="text-2xl font-semibold ml-2 text-rose-400">
+                    Airbnb Home
+                </span>
+            </div>
       <div className="container max-w-3xl mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-          <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+          <h1 className="mb-8 text-3xl text-center">Đăng ký</h1>
           <div className="flex gap-3">
             <div className="w-1/2">
               <div className="h-24">

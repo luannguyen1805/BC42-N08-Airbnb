@@ -26,7 +26,6 @@ const Login = ({ }) => {
     });
 
     const onSubmit = handleSubmit(async (values) => {
-        console.log(values);
         await dispatch(postSignIn(values));
         let user_login = {
             username: values.email,
@@ -43,18 +42,22 @@ const Login = ({ }) => {
     return (
         <form onSubmit={onSubmit} className="cont">
             <div
-                style={{
-                    position: "absolute",
-                    top: "20px",
-                    left: "2%",
-                    padding: "9px 12px",
-                }}
+                className="h-20 px-5 py-4 flex justify-center cursor-pointer "
+                style={{ boxShadow: " 0px 4px 12px rgba(0, 0, 0, 0.1)" }}
                 onClick={() => {
                     navigate("/");
                 }}
-                className="text-lg cursor-pointer transition-all hover:-translate-y-2 text-white font-medium rounded-full bg-primary"
             >
-                Back to Home
+                <div className="h-12 w-12 rounded-xl overflow-hidden">
+                    <img
+                        className="h-full w-full"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd-0CXiCSzYB7Qls6acs-5VZHEewRNH3DUyA&usqp=CAU"
+                        alt=""
+                    />
+                </div>
+                <span className="text-2xl font-semibold ml-2 text-rose-400">
+                    Airbnb Home
+                </span>
             </div>
             <div className="demo">
                 <div className="login">

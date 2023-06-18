@@ -4,6 +4,7 @@ import { Form, Input, Image, notification, Button } from "antd";
 import { AppDispatch, RootState } from "../../../redux/configStore";
 import { useNavigate, useParams } from "react-router-dom";
 import { getlocationApiID, putlocationApi } from "../../../redux/Reducers/locationReducer";
+import "./Btn.scss"
 
 export default function UpdateLocation() {
     const [form] = Form.useForm();
@@ -95,10 +96,8 @@ export default function UpdateLocation() {
                     onChange={hanldeChangeImage}
                 />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="create-user-submit-button">
+                <Button type="primary" htmlType="submit">Update</Button>
             </Form.Item>
         </Form>
     );
