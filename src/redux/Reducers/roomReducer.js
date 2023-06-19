@@ -65,7 +65,6 @@ export const getRoomListByLocation = createAsyncThunk("roomReducer/getRoomListBy
 
 const initialState = {
   roomArray: [],
-  roomDetail: [],
   roomPost: [],
   roomPut: [],
   roomList: [],
@@ -81,7 +80,7 @@ const roomReducer = createSlice({
       state.roomArray = action.payload;
     });
     builder.addCase(getDetailRoom.fulfilled, (state, action) => {
-      state.roomDetail = action.payload;
+      state.roomPut = action.payload;
     });
     builder.addCase(createNewRoom.fulfilled, (state, action) => {
       state.roomPost = action.payload;

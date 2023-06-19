@@ -12,7 +12,7 @@ import {
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserById, updateUser, setUserUpdate } from "../../../redux/Reducers/userAdminReducer";
+import { getUserById, updateUser } from "../../../redux/Reducers/userAdminReducer";
 import "./Btn.scss"
 
 export default function UpdateUser() {
@@ -20,12 +20,9 @@ export default function UpdateUser() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [image, setImage] = useState("");
-    const [sendfile, setSendfile] = useState();
+    
     const [form] = Form.useForm();
     const { Option } = Select;
-    const onChange = (date, dateString) => {
-        // console.log(moment(date).format("DD/MM/YYYY"));
-    };
     const { userUpdate } = useSelector((state) => state.userAdminReducer);
     console.log(userUpdate?.id);
     console.log(param?.id);
@@ -39,15 +36,17 @@ export default function UpdateUser() {
             form.setFieldsValue({
                 ...userUpdate,
                 birthday: moment(userUpdate.birthday, "DD-MM-YYYY"),
+                avatar: setImage(userUpdate.avatar)
             });
         }
     }, [form, userUpdate]);
 
     const onFinish = (values) => {
         values.birthday = values.birthday.format("DD/MM/YYYY");
+        values.avatar = image;
         try {
             if (values) {
-                dispatch(updateUser(param?.id, values));
+                dispatch(updateUser({id:param?.id, data: {...values}}));
                 // Cập nhật giá trị userUpdate
                 // dispatch(setUserUpdate(values));
                 notification.success({
@@ -78,7 +77,6 @@ export default function UpdateUser() {
         reader.readAsDataURL(file);
         reader.onload = (event) => {
             setImage(event.target.result);
-            setSendfile(file);
         };
     };
 
@@ -100,17 +98,7 @@ export default function UpdateUser() {
             name="basic"
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 8 }}
-            initialValues={{
-                id:"",
-                name: "",
-                email: "",
-                password: "",
-                phone: "",
-                birthday: "",
-                avatar: "",
-                gender: false,
-                role: "",
-            }}
+            initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
@@ -120,7 +108,7 @@ export default function UpdateUser() {
                 name="id"
                 rules={[{ required: true, message: "Chưa nhập ID!" }]}
             >
-                <Input />
+                <Input disabled/>
             </Form.Item>
             <Form.Item
                 label="Họ và tên"
@@ -148,7 +136,7 @@ export default function UpdateUser() {
                 name="birthday"
                 rules={[{ required: true, message: "Chưa nhập ngày sinh!" }]}
             >
-                <DatePicker onChange={onChange} format={allowedDateFormats} />
+                <DatePicker  format={allowedDateFormats} />
                 {/* <Input /> */}
             </Form.Item>
             <Form.Item
@@ -172,7 +160,7 @@ export default function UpdateUser() {
                 </Select>
             </Form.Item>
             <Form.Item label="Hình ảnh">
-                <Input type="file" onChange={hanldeChangeImage} />
+                <Input type="file" name="avatar" onChange={hanldeChangeImage} />
                 <Image
                     src={image}
                     style={{ padding: "50px" }}

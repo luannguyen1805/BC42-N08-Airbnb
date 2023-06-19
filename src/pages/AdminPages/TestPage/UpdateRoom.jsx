@@ -32,7 +32,7 @@ export default function UpdateRoom() {
         values.hinhAnh = image;
         console.log(values);
         if (values) {
-            await dispatch(roomActionAdmin(params.id, values));
+            await dispatch(roomActionAdmin({id: params.id, data: {...values}}));
             notification.success({
                 message: "Thêm thông tin phòng thành công",
             });

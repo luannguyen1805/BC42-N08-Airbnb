@@ -24,7 +24,7 @@ export default function UpdateBooking() {
     console.log(roombookingPut)
 
     useEffect(() => {
-        dispatch(getRoomBookingApiID(params.id))
+        dispatch(getRoomBookingApiID(params?.id))
     }, [])
     useEffect(() => {
         if (roombookingPut) {
@@ -34,12 +34,13 @@ export default function UpdateBooking() {
                 ngayDi: moment(roombookingPut.ngayDi)
             })
         }
-    }, [roombookingPut])
+    }, [form, roombookingPut])
 
     const onFinish = values => {
         values.id = 0;
         if (values) {
-            dispatch(putRoomBookingApi(params.id, values))
+            //dispatch(putRoomBookingApi(params?.id, values));
+            dispatch(putRoomBookingApi({ id: params?.id, data: { ...values } }));
             notification.success({
                 message: "Cập nhật đặt phòng thành công"
             })
@@ -67,7 +68,7 @@ export default function UpdateBooking() {
                 name="maPhong"
                 rules={[{ required: true, message: "Chưa mã phòng!" }]}
             >
-                <Input />
+                <Input disabled/>
             </Form.Item>
 
             <Form.Item

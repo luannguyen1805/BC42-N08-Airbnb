@@ -1,59 +1,62 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Form, Input, Image, notification, Button } from "antd";
-import { AppDispatch, RootState } from "../../../redux/configStore";
-import { useNavigate, useParams } from "react-router-dom";
-import { getlocationApiID, putlocationApi } from "../../../redux/Reducers/locationReducer";
+import React, { useEffect, useState } from "react"
+import { Button, Form, Input, Image, notification } from "antd"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import {
+    getLocationDetailById,
+    putlocationApi
+} from "../../../redux/Reducers/locationReducer"
 import "./Btn.scss"
 
 export default function UpdateLocation() {
-    const [form] = Form.useForm();
-    const params = useParams();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [image, setImage] = useState("");
-
+    const [form] = Form.useForm()
+    const params = useParams()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [image, setImage] = useState("")
+    //   const [sendfile, setSendfile] = useState<string>();
+    const { locationPut } = useSelector(state => state.locationReducer);
+    console.log(locationPut);
     useEffect(() => {
-        dispatch(getlocationApiID(params.id));
-    }, [params.id]);
-
-    const { locationPut } = useSelector(
-        (state) => state.locationReducer
-    );
-
+        dispatch(getLocationDetailById(params.id))
+    }, [params.id])
+    
     useEffect(() => {
         if (locationPut) {
             form.setFieldsValue({
                 ...locationPut,
-                hinhAnh: setImage(locationPut.hinhAnh),
-            });
+                hinhAnh: setImage(locationPut.hinhAnh)
+            })
         }
-    }, [locationPut]);
+    }, [locationPut])
 
-    const onFinish = async (values) => {
-        values.id = 0;
-        values.hinhAnh = image;
+    console.log(params?.id);
+    console.log(locationPut);
+    const onFinish =  values => {
+        values.hinhAnh = image
         if (values) {
-            await dispatch(putlocationApi(params.id, values));
+            dispatch(putlocationApi({ id: params?.id, data: { ...values }}));
+            
             notification.success({
-                message: "Thêm vị trí thành công",
-            });
+                message: "Thêm vị trí thành công"
+            })
         }
-        navigate("/admin/dashboard/locationAdmin");
-    };
+        navigate("/admin/dashboard/locationAdmin")
+    }
 
-    const onFinishFailed = (errorInfo) => {
-        console.log("Failed:", errorInfo);
-    };
+    const onFinishFailed = errorInfo => {
+        console.log("Failed:", errorInfo)
+    }
 
-    const hanldeChangeImage = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-            setImage(event.target.result);
-        };
-    };
+    const hanldeChangeImage = event => {
+        const file = event.target.files[0]
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = event => {
+            setImage(event.target.result)
+           
+        }
+    }
 
     return (
         <Form
@@ -67,12 +70,21 @@ export default function UpdateLocation() {
             autoComplete="off"
         >
             <Form.Item
+            
+                label="ID"
+                name="id"
+                rules={[{ required: true, message: "Chưa nhập ID!" }]}
+            >
+                <Input disabled />
+            </Form.Item>
+            <Form.Item
                 label="Địa danh"
                 name="tenViTri"
                 rules={[{ required: true, message: "Chưa nhập tên!" }]}
             >
                 <Input />
             </Form.Item>
+
             <Form.Item
                 label="Tỉnh Thành"
                 name="tinhThanh"
@@ -100,5 +112,5 @@ export default function UpdateLocation() {
                 <Button type="primary" htmlType="submit">Update</Button>
             </Form.Item>
         </Form>
-    );
+    )
 }
