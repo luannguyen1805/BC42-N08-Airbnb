@@ -1,31 +1,42 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { http } from '../../utils/setting';
+import { createSlice } from "@reduxjs/toolkit"
+import { http } from "../../utils/setting"
 
-export const getCommentRoomById = createAsyncThunk(
-  'commentReducer/getCommentRoomById',
-  async (id) => {
-    try {
-      const response = await http.get(`/binh-luan`);
-      const arrComment = response.data.content;
-      const arrCommentId = arrComment.filter((item) => item.maPhong === id);
-      return arrCommentId;
-    } catch (error) {
-      console.log(error);
-      throw error;
+const initialState = {
+  commentById: []
+}
+
+const commentReducer = createSlice({
+  name: "commentReducer",
+  initialState,
+  reducers: {
+    CommentRoomId: (state, action) => {
+      state.commentById = action.payload
     }
   }
-);
+})
 
-const commentSlice = createSlice({
-  name: 'commentReducer',
-  initialState: {},
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getCommentRoomById.fulfilled, (state, action) => {
-      return action.payload;
-    });
-  },
-});
+export const { CommentRoomId } = commentReducer.actions
 
+export default commentReducer.reducer
 
-export default commentSlice.reducer;
+//--------call api --------------------
+
+export const getCommentRoomById = id => {
+  return async dispatch => {
+    try {
+      let result = await http.get(`/binh-luan`)
+      let arrComment = result.data.content
+      // console.log(arrComment)
+      let arrCommentId = arrComment.reduce((arr, item) => {
+        if (item.maPhong === id) {
+          arr.push(item)
+        }
+        return arr
+      }, [])
+      const action = CommentRoomId(arrCommentId)
+      dispatch(action)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}

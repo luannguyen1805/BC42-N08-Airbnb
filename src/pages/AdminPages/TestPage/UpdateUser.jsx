@@ -27,39 +27,40 @@ export default function UpdateUser() {
         // console.log(moment(date).format("DD/MM/YYYY"));
     };
     const { userUpdate } = useSelector((state) => state.userAdminReducer);
-    console.log(userUpdate);
+    console.log(userUpdate?.id);
+    console.log(param?.id);
 
     useEffect(() => {
-        dispatch(getUserById(param.id));
-      }, [dispatch, param.id]);
-    
-      useEffect(() => {
+        dispatch(getUserById(param?.id));
+    }, []);
+
+    useEffect(() => {
         if (userUpdate) {
-          form.setFieldsValue({
-            ...userUpdate,
-            birthday: moment(userUpdate.birthday, "DD-MM-YYYY"),
-          });
+            form.setFieldsValue({
+                ...userUpdate,
+                birthday: moment(userUpdate.birthday, "DD-MM-YYYY"),
+            });
         }
-      }, [form, userUpdate]);
-    
-      const onFinish = async (values) => {
+    }, [form, userUpdate]);
+
+    const onFinish = (values) => {
         values.birthday = values.birthday.format("DD/MM/YYYY");
         try {
-          if (values) {
-            await dispatch(updateUser(param.id, values));
-            // Cập nhật giá trị userUpdate
-            dispatch(setUserUpdate(values));
-            notification.success({
-              message: "Cập nhật người dùng thành công",
-            });
-            navigate("/admin/dashboard/userAdmin");
-          }
+            if (values) {
+                dispatch(updateUser(param?.id, values));
+                // Cập nhật giá trị userUpdate
+                // dispatch(setUserUpdate(values));
+                notification.success({
+                    message: "Cập nhật người dùng thành công",
+                });
+                navigate("/admin/dashboard/userAdmin");
+            }
         } catch (error) {
-          notification.error({
-            message: `${error}`,
-          });
+            notification.error({
+                message: `${error}`,
+            });
         }
-      };
+    };
 
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
@@ -100,6 +101,7 @@ export default function UpdateUser() {
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 8 }}
             initialValues={{
+                id:"",
                 name: "",
                 email: "",
                 password: "",
@@ -113,6 +115,13 @@ export default function UpdateUser() {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
+            <Form.Item
+                label="ID"
+                name="id"
+                rules={[{ required: true, message: "Chưa nhập ID!" }]}
+            >
+                <Input />
+            </Form.Item>
             <Form.Item
                 label="Họ và tên"
                 name="name"
