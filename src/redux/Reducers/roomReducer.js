@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { http } from "../../utils/setting";
 
+
 export const getAllRoom = createAsyncThunk("roomReducer/getAllRoom", async () => {
   try {
     const result = await http.get("/phong-thue");
@@ -13,6 +14,19 @@ export const getAllRoom = createAsyncThunk("roomReducer/getAllRoom", async () =>
 
 export const getDetailRoom = createAsyncThunk(
   "roomReducer/getDetailRoom",
+  async (id) => {
+    try {
+      const result = await http.get(`/phong-thue/${id}`);
+      return result.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error.response.data;
+    }
+  }
+);
+
+export const getDetailRoomID = createAsyncThunk(
+  "roomReducer/getDetailRoomID",
   async (id) => {
     try {
       const result = await http.get(`/phong-thue/${id}`);
@@ -65,10 +79,11 @@ export const getRoomListByLocation = createAsyncThunk("roomReducer/getRoomListBy
 
 const initialState = {
   roomArray: [],
+  roomDetail: [],
   roomPost: [],
   roomPut: [],
   roomList: [],
-  roomListLocation: [],
+  roomListLocation: []
 };
 
 const roomReducer = createSlice({
@@ -90,6 +105,9 @@ const roomReducer = createSlice({
     });
     builder.addCase(getRoomListByLocation.fulfilled, (state, action) => {
       state.roomListLocation = action.payload;
+    });
+    builder.addCase(getDetailRoomID.fulfilled, (state, action) => {
+      state.roomDetail = action.payload;
     });
   },
 });

@@ -5,6 +5,7 @@ const initialState = {
   locationList: [],
   locationPut: [],
   locationpost: [],
+  localDetail: []
 };
 
 export const getLocationApi = createAsyncThunk(
@@ -33,6 +34,7 @@ export const putlocationApi = createAsyncThunk(
   }
 );
 
+
 export const deletelocationApi = createAsyncThunk(
   "locationReducer/deletelocationApi",
   async (id) => {
@@ -44,12 +46,12 @@ export const deletelocationApi = createAsyncThunk(
       throw err;
     }
   }
-);
-
-
-export const createLocationApi = createAsyncThunk(
-  "locationReducer/createLocationApi",
-  async (data) => {
+  );
+  
+  
+  export const createLocationApi = createAsyncThunk(
+    "locationReducer/createLocationApi",
+    async (data) => {
     try {
       const result = await http.post("/vi-tri", data);
       return result.data.content;
@@ -60,6 +62,18 @@ export const createLocationApi = createAsyncThunk(
   }
   );
   
+  export const getlocationApiID = createAsyncThunk(
+    "locationReducer/getlocationApiID",
+    async (id) => {
+      try {
+        const result = await http.get(`/vi-tri/${id}`);
+        return result.data.content;
+      } catch (err) {
+        console.log(err);
+        throw err;
+      }
+    }
+  );
 export const getLocationDetailById = createAsyncThunk(
   "locationReducer/getLocationDetailById",
   async (id) => {
@@ -90,6 +104,9 @@ const locationReducer = createSlice({
     });
     builder.addCase(getLocationDetailById.fulfilled, (state, action) => {
       state.locationPut = action.payload;
+    });
+    builder.addCase(getlocationApiID.fulfilled, (state, action) => {
+      state.localDetail = action.payload;
     });
   },
 });

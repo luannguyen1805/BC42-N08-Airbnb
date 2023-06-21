@@ -19,4 +19,7 @@ const MapLocation = () => {
   )
 }
 
+
+
 export default MapLocation;
+

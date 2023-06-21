@@ -10,7 +10,7 @@ const DetailLocation = () => {
           <DetailLocationRoom />
         </div>
         <div className="basis-1/3">
-          <MapLocation />
+          <MapLocation/>
         </div>
       </div>
     </div>

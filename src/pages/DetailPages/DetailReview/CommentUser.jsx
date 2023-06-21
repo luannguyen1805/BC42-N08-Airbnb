@@ -2,18 +2,19 @@ import _ from "lodash";
 import React, { memo, useEffect, useState } from "react";
 import { http } from "../../../utils/setting";
 
+
 function CommentUser({ id, userCommentId }) {
-  const [userComment, setUserComment] = useState();
+  const [userComment, setUserComment] = useState()
   const getUserComment = async () => {
     if (id) {
-      let result = await http.get(`/users/${id}`);
-      setUserComment(result.data.content);
+      let result = await http.get(`/users/${id}`)
+      setUserComment(result.data.content)
     }
-  };
+  }
 
   useEffect(() => {
-    getUserComment();
-  }, []);
+    getUserComment()
+  }, [])
 
   return (
     <div className="mt-2">
@@ -34,7 +35,7 @@ function CommentUser({ id, userCommentId }) {
       </div>
       <p className="text-base">{userCommentId?.noiDung}</p>
     </div>
-  );
+  )
 }
 
-export default memo(CommentUser);
+export default memo(CommentUser)

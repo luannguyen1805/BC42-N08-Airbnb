@@ -5,8 +5,8 @@ import ModalPopup from "../../components/Modal/ModalPopup";
 import { ToastContainer } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../Hooks/HooksRedux";
 import { getCommentRoomById } from "../../redux/Reducers/commentReducer";
-import { getLocationDetailById } from "../../redux/Reducers/locationReducer";
-import { getDetailRoom } from "../../redux/Reducers/roomReducer";
+import { getlocationApiID } from "../../redux/Reducers/locationReducer";
+import { getDetailRoomID } from "../../redux/Reducers/roomReducer";
 import DetailComment from "./DetailComment/DetailComment";
 import DetailInfoRoom from "./DetailInfo/DetailInfo";
 import DetailReview from "./DetailReview/DetailReview";
@@ -20,9 +20,9 @@ const DetailPages = () => {
   const { roomDetail } = useAppSelector((state) => state.roomReducer);
 
   useEffect(() => {
-    const action1 = getDetailRoom(id);
+    const action1 = getDetailRoomID(id);
     dispatch(action1);
-    const action2 = getLocationDetailById(Number(id));
+    const action2 = getlocationApiID(Number(id));
     dispatch(action2);
     const action3 = getCommentRoomById(Number(id));
     dispatch(action3);
