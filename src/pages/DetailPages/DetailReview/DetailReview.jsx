@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../../Hooks/HooksRedux";
 import { modalPopUp } from "../../../redux/Reducers/openModalReducer";
 import CommentUser from "./CommentUser";
 import PopupReview from "./PopupReview";
-import PopUpTitle from "./PopUpTitle";
 
 const DetailReview = () => {
   const { commentById } = useAppSelector((state) => state.commentReducer);
@@ -21,7 +20,7 @@ const DetailReview = () => {
 
   const user1 = getRandomUser();
   const user2 = getRandomUser();
-
+  
   return (
     <div className="review" id="review">
       <div className="flex items-center gap-2 font-semibold text-2xl mt-5">
@@ -49,7 +48,6 @@ const DetailReview = () => {
             modalPopUp({
               ComponentContent: PopupReview,
               openModalPopup: true,
-              ComponentTitle: PopUpTitle,
             })
           );
         }}

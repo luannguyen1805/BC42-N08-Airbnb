@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { getUserById } from "../../redux/Reducers/userAdminReducer";
 import { updateAvatarUser } from "../../redux/Reducers/userReducer";
 
+
 export default function UpdateAvatar() {
     const params = useParams();
     const dispatch = useDispatch();

@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import {
     Button,
-    Checkbox,
     Form,
     Input,
     DatePicker,
     Select,
-    Image,
     notification,
 } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserProfileAPi, putUserProfileAPI } from "../../redux/Reducers/userReducer";
-import { AppDispatch, RootState } from "../../redux/configStore";
+import { putUserProfileAPI, updateUser } from "../../redux/Reducers/userReducer";
+import { getUserById } from "../../redux/Reducers/userAdminReducer";
 import "./UpdateProfile.scss";
 
 export default function UpdateProfile() {
+    const params = useParams();
     const dispatch = useDispatch();
     const [form] = Form.useForm();
     const { Option } = Select;
@@ -26,22 +25,37 @@ export default function UpdateProfile() {
     const { userProfile } = useSelector(
         (state) => state.userReducer
     );
+    useEffect(() => {
+        if (params.userId) {
+            dispatch(getUserById(params.userId));
+        }
+    }, [params.userId]);
+    useEffect(() => {
+        if (userProfile) {
+            form.setFieldsValue({
+                ...userProfile,
+                birthday: moment(userProfile.birthday, "DD-MM-YYYY"),
+            });
+        }
+    }, [form,userProfile]);
 
-    const onFinish = async (values) => {
+    const onFinish = (values) => {
         try {
             if (values) {
-                // Post APi
-                await dispatch(putUserProfileAPI(userProfile.id, values));
+                // put APi
+                 dispatch(putUserProfileAPI({id:params?.id, data: {...values}}));
                 notification.success({
                     message: "Cập nhật người dùng thành công",
                 });
             }
+           
         } catch (error) {
             notification.error({
                 message: `${error}`,
             });
         }
     };
+    console.log(userProfile);
 
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
@@ -63,16 +77,6 @@ export default function UpdateProfile() {
             },
         },
     };
-
-    useEffect(() => {
-        if (userProfile) {
-            form.setFieldsValue({
-                ...userProfile,
-                birthday: moment(userProfile.birthday, "DD-MM-YYYY"),
-            });
-        }
-    }, [userProfile]);
-
     let allowedDateFormats = [
         "DD/MM/YYYY",
         "D/M/YYYY",
@@ -82,7 +86,6 @@ export default function UpdateProfile() {
         "D. M. YYYY",
         "DD-MM-YYYY",
     ];
-
     return (
         <Form
             form={form}
@@ -99,10 +102,12 @@ export default function UpdateProfile() {
                 gender: false,
                 role: "",
             }}
+           
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
+            
             <Form.Item
                 label="Họ và tên"
                 name="name"

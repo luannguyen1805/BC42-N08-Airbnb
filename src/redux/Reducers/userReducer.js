@@ -6,6 +6,7 @@ const initialState = {
   userLogin: getStoreJSON(USER_LOGIN) || {},
   userProfile: {},
   userBooking: [],
+  userProfiles: [],
 };
 
 
@@ -66,6 +67,8 @@ export const getUserProfileAPI = createAsyncThunk(
   }
 );
 
+
+
 export const getBookingUserApi = createAsyncThunk(
   "userReducer/getBookingUserApi",
   async (_, { getState, rejectWithValue }) => {
@@ -98,6 +101,19 @@ export const putUserProfileAPI = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "userReducer/updateUser",
+  async ({ id, data }) => {
+    try {
+      const response = await http.put(`/users/${id}`, data);
+      return response.data.content;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 export const updateAvatarUser = createAsyncThunk(
   "userReducer/updateAvatarUser",
   async (data) => {
@@ -110,6 +126,8 @@ export const updateAvatarUser = createAsyncThunk(
     }
   }
 );
+
+
 
 const userSlice = createSlice({
   name: "userReducer",
@@ -134,11 +152,14 @@ const userSlice = createSlice({
         state.userBooking = action.payload;
       })
       .addCase(putUserProfileAPI.fulfilled, (state, action) => {
-        state.userLogin = action.payload;
+        state.userProfiles = action.payload;
       })
       .addCase(updateAvatarUser.fulfilled, (state, action) => {
         state.userProfile = action.payload;
-      });
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.userProfile = action.payload;
+      })
   },
 });
 

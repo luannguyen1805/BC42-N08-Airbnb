@@ -44,7 +44,7 @@ export default function RoomItem() {
       <div className="text-center ">
         {lengthroom > 1 && lengthroom > statusLength ? (
           <p
-            className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-3 py-3 mt-5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 w-60 text-center"
+            className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-3 py-3 mt-5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 w-60 text-center cursor-pointer"
             onClick={() =>
               setStatusLength((preState) => {
                 return preState + 1;
@@ -59,7 +59,7 @@ export default function RoomItem() {
         )}
         {statusLength >= lengthroom && lengthroom !== 0 && lengthroom > 1 ? (
           <div
-            className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-3 py-3 mt-5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 w-60 text-center"
+            className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-3 py-3 mt-5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 w-60 text-center cursor-pointer"
             onClick={() => setStatusLength(2)}
           >
             Vé của bạn đã hết !<p>Thu gọn</p>

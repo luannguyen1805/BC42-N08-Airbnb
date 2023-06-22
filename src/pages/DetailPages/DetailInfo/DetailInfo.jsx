@@ -3,6 +3,8 @@ import DetailBooking from '../DetailBooking/DetailBooking'
 import DetailDescription from './DetailDescription/DetailDescription'
 import DetailEquipment from './DetailEquipment/DetailEquipment'
 import DetailInfoCover from './DetailInfoCover/DetailInfoCover'
+import DetailIntroduce from './DetailIntroduce/DetailIntroduce'
+import DetailSleepRoom from "./DetailSleepRoom/DetailSleepRoom";
 
 function DetailInfo({ id }) {
   return (
@@ -10,10 +12,9 @@ function DetailInfo({ id }) {
       <div className='w-3/5'>
         <DetailDescription />
         <DetailInfoCover />
-        {/* <DetailIntroduce/> */}
-        {/* <DetailSleepRoom /> */}
+        <DetailIntroduce/>
+        <DetailSleepRoom />
         <DetailEquipment />
-        {/* <DetailCalendar/> */}
       </div>
       <div className='w-2/5 relative right-0 top-0'>
         <DetailBooking id={id} />

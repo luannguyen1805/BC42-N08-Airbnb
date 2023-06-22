@@ -75,9 +75,15 @@ export default function HeaderMenu() {
     {
       key: "3",
       label: (
-        <p key="admin" onClick={() => handleMenuClick(userProfile?.role === "ADMIN" ? "/admin/dashboard" : "/")}>
-          <span className="text-base m-0 py-1">Đi đến trang quản trị</span>
-        </p>
+        <>
+        {userProfile?.role === "ADMIN" ? (
+           <p key="admin" onClick={() => handleMenuClick("admin/dashboard")}>
+           <span className="text-base m-0 py-1">Đi đến trang quản trị</span>
+         </p>
+        ) : (
+          <p key="login" onClick={() => handleMenuClick("/")}> </p>
+        )}
+      </>
       ),
     },
     {

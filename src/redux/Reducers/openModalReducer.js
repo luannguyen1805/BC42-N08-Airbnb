@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   openModal: false,
   openModalPopup: false,
-  ComponentTitle: "default",
   ComponentContent: "default",
 };
 
@@ -15,10 +14,9 @@ const openModalReducer = createSlice({
       state.openModal = action.payload;
     },
     modalPopUp(state, action) {
-      const { ComponentContent, openModalPopup, ComponentTitle } = action.payload;
+      const { ComponentContent, openModalPopup } = action.payload;
       state.openModalPopup = openModalPopup;
       state.ComponentContent = ComponentContent;
-      state.ComponentTitle = ComponentTitle;
     },
   },
 });
@@ -26,4 +24,5 @@ const openModalReducer = createSlice({
 export const { modal, modalPopUp } = openModalReducer.actions;
 
 export default openModalReducer.reducer;
+
 

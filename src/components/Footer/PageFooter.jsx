@@ -6,7 +6,7 @@ const { Footer } = Layout;
 
 export default function PageFooter() {
     return (
-        <div className="" id="pageFooter">
+        <div className="" id="pageFooter mx-100">
             <Footer className=" text-center">
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={6}>

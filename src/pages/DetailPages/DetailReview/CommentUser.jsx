@@ -26,11 +26,11 @@ function CommentUser({ id, userCommentId }) {
               : `https://picsum.photos/200/300?random=${_.random(1, 1000)}`
           }
           alt="..."
-          className="w-20 h-20 rounded-full"
+          className="w-16 h-16 rounded-full"
         />
         <div className="text-lg ml-3">
           <h2 className="font-medium">{userComment?.name}</h2>
-          <p>{userCommentId?.ngayBinhLuan}</p>
+          <p className="text-base">{userCommentId?.ngayBinhLuan}</p>
         </div>
       </div>
       <p className="text-base">{userCommentId?.noiDung}</p>

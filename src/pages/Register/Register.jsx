@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "antd";
+import { Modal, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -206,6 +206,12 @@ const Register = () => {
           </div>
           <button
             type="submit"
+            onClick={() => {
+              notification.success({
+                message: "Đăng ký thành công!",
+            });
+            navigate("/");
+            }}
             className="w-full text-center py-3 rounded bg-green-500 text-white text-lg hover:bg-green-dark focus:outline-none my-1"
           >
             Create Account
