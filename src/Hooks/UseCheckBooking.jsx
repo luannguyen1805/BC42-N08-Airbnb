@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getBookingApi } from '../redux/Reducers/bookingRoomReducer';
-import { getUserApi } from '../redux/Reducers/userAdminReducer';
 
 export default function UseCheckBooking() {
   const dispatch = useDispatch();

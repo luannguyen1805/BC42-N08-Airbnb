@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Modal, notification } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
+import { useDispatch} from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { string, object, boolean } from "yup";
-import classnames from "classnames";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import dayjs from "dayjs";
 import classNames from "classnames";
@@ -18,6 +17,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [isShowPass, setIsShowPass] = useState(false);
   const [day, setDay] = useState("1/1/2022");
+  const [isValid, setIsValid] = useState(true); // Thêm biến isValid
 
   useEffect(() => {
     dispatch(getAllUser());
@@ -60,16 +60,23 @@ const Register = () => {
     mode: "onTouched",
   });
 
-  const onSubmit = handleSubmit((values) => {
-    console.log(values);
-    const action = postSignupUser(values);
-    dispatch(action);
+  const onSubmit =  handleSubmit ( async (values) => {
+    setIsValid(false); // Đánh dấu form không hợp lệ trước khi kiểm tra
+    if (isExitEmail) {
+      dispatch(postSignupUser(values));
+      await dispatch(getAllUser());
+      setIsValid(true); // Đánh dấu form hợp lệ nếu không có email trùng
+      notification.success({
+        message: "Tạo tài khoản thành công!",
+      });
+      navigate("/login");
+    }
   });
 
   return (
     <form
       id="form"
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="bg-grey-lighter min-h-screen flex flex-col"
     >
       <div
@@ -206,12 +213,13 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            onClick={() => {
-              notification.success({
-                message: "Đăng ký thành công!",
-            });
-            navigate("/");
-            }}
+            // onClick={() => {
+            //   notification.success({
+            //     message: "Đăng ký thành công!",
+            // });
+            // navigate("/login");
+            // }}
+            disabled={!isValid}
             className="w-full text-center py-3 rounded bg-green-500 text-white text-lg hover:bg-green-dark focus:outline-none my-1"
           >
             Create Account
@@ -250,3 +258,5 @@ const Register = () => {
 };
 
 export default Register;
+
+

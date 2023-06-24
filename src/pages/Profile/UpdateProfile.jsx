@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
     Button,
     Form,
@@ -9,8 +9,8 @@ import {
 } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { putUserProfileAPI, updateUser } from "../../redux/Reducers/userReducer";
+import { useParams } from "react-router-dom";
+import { putUserProfileAPI } from "../../redux/Reducers/userReducer";
 import { getUserById } from "../../redux/Reducers/userAdminReducer";
 import "./UpdateProfile.scss";
 

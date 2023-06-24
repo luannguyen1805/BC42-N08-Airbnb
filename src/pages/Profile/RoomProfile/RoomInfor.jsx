@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import moment from "moment";
 import _ from "lodash";
 import { BsFillForwardFill, BsFillGeoAltFill } from "react-icons/bs";
-import { getDetailRoom } from "../../../redux/Reducers/roomReducer";
 import { http } from "../../../utils/setting";
 
 export default function RoomInfor({ mainbooking }) {

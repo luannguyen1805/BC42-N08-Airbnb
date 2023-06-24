@@ -2,7 +2,7 @@ import { Table, Input, Space, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUser, getPaginationUser } from "../../../redux/Reducers/userAdminReducer";
+import { getAllUser } from "../../../redux/Reducers/userAdminReducer";
 import { deleteUser } from "../../../redux/Reducers/userAdminReducer";
 
 export default function UserManagement() {

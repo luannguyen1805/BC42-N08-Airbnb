@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Table, Space, Button } from "antd";
-import {
-    EditOutlined,
-    SolutionOutlined,
-    DeleteOutlined,
-} from "@ant-design/icons";
-import moment from "moment";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationApi } from "../../../redux/Reducers/locationReducer";
@@ -20,23 +14,23 @@ export default function LocationManagement() {
     }, []);
 
     const navigate = useNavigate();
-    const [loadings, setLoadings] = useState([]);
-    const enterLoading = (index) => {
-        setLoadings((prevLoadings) => {
-            const newLoadings = [...prevLoadings];
-            newLoadings[index] = true;
-            return newLoadings;
-        });
+    // const [loadings, setLoadings] = useState([]);
+    // const enterLoading = (index) => {
+    //     setLoadings((prevLoadings) => {
+    //         const newLoadings = [...prevLoadings];
+    //         newLoadings[index] = true;
+    //         return newLoadings;
+    //     });
 
-        setTimeout(() => {
-            setLoadings((prevLoadings) => {
-                const newLoadings = [...prevLoadings];
-                newLoadings[index] = false;
-                navigate("createlocation");
-                return newLoadings;
-            });
-        }, 1000);
-    };
+    //     setTimeout(() => {
+    //         setLoadings((prevLoadings) => {
+    //             const newLoadings = [...prevLoadings];
+    //             newLoadings[index] = false;
+    //             navigate("createlocation");
+    //             return newLoadings;
+    //         });
+    //     }, 1000);
+    // };
 
     const columns = [
         {
@@ -118,19 +112,7 @@ export default function LocationManagement() {
     return (
         <>
             <Space style={{ width: "100%" }} direction="vertical" className="w-100 py-3">
-                {/* Add any additional components or elements here */}
-                {/* <Button
-          type="primary"
-          loading={loadings[0]}
-          onClick={() => enterLoading(0)}
-        >
-          Thêm vị trí
-        </Button> */}
-                {/* <Search
-          placeholder="input search text"
-          onSearch={onSearch}
-          enterButton
-        /> */}
+                
             </Space>
             <Table columns={columns} dataSource={data} onChange={onChange} />
         </>

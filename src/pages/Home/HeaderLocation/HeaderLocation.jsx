@@ -15,7 +15,7 @@ const HeaderLocation = () => {
     return (
       <>
       <div className="flex justify-between flex-wrap py-10">
-        {locationList?.slice(0, 12).map((location, index) => (
+        {locationList?.slice(0, 50).map((location, index) => (
           <HeaderLocationItem key={index} location={location} />
         ))}
       </div>

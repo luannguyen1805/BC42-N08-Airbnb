@@ -1,6 +1,5 @@
 import ReactApexChart from "react-apexcharts";
 import { Row, Col, Typography } from "antd";
-import { ApexOptions } from "apexcharts";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllRoomBooking } from "../../../../redux/Reducers/bookingRoomReducer";

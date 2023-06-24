@@ -1,16 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { string, object } from "yup";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { postSignIn } from "../../redux/Reducers/userReducer";
-import { CURRENT_USER, getStoreJSON, setStoreJSON, USER_LOGIN } from "../../utils/setting";
+import { getStoreJSON, USER_LOGIN } from "../../utils/setting";
 
 const Login = ({ }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { number } = useParams();
     const schema = object({
         email: string().required("Tài khoản không được để trống"),
         password: string().required("Mật khẩu không được để trống"),
@@ -27,12 +26,10 @@ const Login = ({ }) => {
 
     const onSubmit = handleSubmit(async (values) => {
         await dispatch(postSignIn(values));
-        let user_login = {
-            username: values.email,
-            password: values.password,
-        };
-        // let currentUser = await axios.post(loginRoute,user_login);
-        // await setStoreJSON(CURRENT_USER,currentUser.data.content);
+        // let user_login = {
+        //     username: values.email,
+        //     password: values.password,
+        // };
         let userLogin = await getStoreJSON(USER_LOGIN);
         if (userLogin) {
             navigate("/");

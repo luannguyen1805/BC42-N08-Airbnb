@@ -5,19 +5,19 @@ import { FcNext, FcPrevious } from "react-icons/fc";
 const images = [
   {
     id: 1,
-    url: "https://ktmt.vnmediacdn.com/images/2021/08/03/7-1627961881-images10898921-1611196252800651567316.jpg",
+    url: "https://toigingiuvedep.vn/wp-content/uploads/2021/07/hinh-anh-dep-thien-nhien-viet-nam.jpg",
   },
   {
     id: 2,
-    url: "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/02/anh-3.jpg",
+    url: "https://tindep.com/wp-content/uploads/2019/10/anh-thien-nhien-viet-nam-35.jpg",
   },
   {
     id: 3,
-    url: "https://www.quangbinhtravel.vn/wp-content/uploads/2020/09/dong-phong-nha.jpg",
+    url: "https://haycafe.vn/wp-content/uploads/2022/03/Hinh-anh-dep-ve-thien-nhien-Viet-Nam.jpg",
   },
   {
     id: 4,
-    url: "https://ktmt.vnmediacdn.com/images/2021/08/03/7-1627963639-5f9bf78b329f7bdf8ceee0fd55fc2176.jpg",
+    url: "https://toigingiuvedep.vn/wp-content/uploads/2020/12/hinh-anh-phong-canh-thien-nhien-dep-nhat-the-gioi.jpg",
   },
 ];
 

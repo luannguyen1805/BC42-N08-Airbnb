@@ -1,6 +1,5 @@
 import { Button, Form, Input, Image, notification } from "antd";
 import React, { useState } from "react";
-import moment from "moment";
 import { useDispatch } from "react-redux";
 import { createLocationApi } from "../../../redux/Reducers/locationReducer";
 import { useNavigate } from "react-router-dom";
